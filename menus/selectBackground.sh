@@ -21,5 +21,7 @@ cd "$HOME/.dwm/Backgrounds"
 #echo "feh --bg-scale $selectedt &"
 echo "$selectedt" > ../defaultBG.conf
 #feh --bg-scale "$selectedt" &
-./../setdefaultBackground.sh
+echo $(pwd)
+test "$selectedt" = "" && cd ./../ && ./menus/selectMenuPrograms.sh
+test "$selectedt" = "" || ./../setdefaultBackground.sh
 echo ""
