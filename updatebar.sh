@@ -46,7 +46,7 @@ get_bartext(){
 subtext=$(sub_result "$1")
 paddedtext=$(pad_text "$subtext")
 
-echo "| DAMIAN: $paddedtext |"
+echo "| $(whoami): $paddedtext |"
 }
 
 bartext=$(get_bartext "$1")

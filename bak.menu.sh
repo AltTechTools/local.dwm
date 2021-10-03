@@ -12,3 +12,29 @@ selectedsubmenu=$(./confselect.sh menu_List.conf $dwmargs)
 fi
 
 echo "$($selectedsubmenu)"
+
+case "$selectedname" in
+	"GeneralList")
+		echo "$(./selectkeycombos.sh --dmenu-prompt '')"
+	;;
+        "GoToList")
+		echo "$(./selectkeyGoTo.sh --dmenu-prompt '')"
+	;;
+        "MvToList")
+		echo "$(./selectkeyMvTo.sh --dmenu-prompt '')"
+	;;
+	"AudioList")
+		echo "$(./selectAudioKey.sh --dmenu-promt '')"
+	;;
+	"ProgramList")
+		echo "$(./selectProgram.sh --dmenu-promt '')"
+	;;
+	"ProgramList2")
+		echo "$(./selectMenuPrograms.sh --dmenu-prompt '')"
+	;;
+	"")
+		echo ""
+	;;
+	*)
+		echo "$(./menu.sh --dmenu-prompt '')"
+esac

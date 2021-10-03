@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#cd "$HOME/.dwm/menues"
 #e.g.: 
 #./confselect.sh keypress_List.conf --dmenu '-l 8' --dmenu-prompt "test" --dmenu-font "monospace:size=36" --dmenu-nb "#FF0000"
 #$1=menu_List.conf
@@ -74,7 +74,7 @@ if [ "${#dmenuargs}" -lt 1 ]; then
 fi
 #echo "$dmenuargs"
 
-menulist=$(grep -v "#" "$1")
+menulist=$(grep -v "#" "menus/$1")
 #selected=$(echo "$menulist" | awk '{print $1}' FS=";" | dmenu $dmenuargs -p "$dmenuprompt")
 #selected=$(echo "$menulist" | awk '{print $1}' FS=";" | dmenu $(echo "$dmenuargstot"))
 selected=$(echo "$menulist" | awk '{print $1}' FS=";" | dmenu $dmenuargstot)

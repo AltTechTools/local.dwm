@@ -8,7 +8,7 @@ sleep 10
 
 #Files(picntures) from Backgrounds are listed to select as a Background from the Menu (link files into this folder to have available as an option e.g.: ln -s <source filepath> <desired link name(will be shown as)>)
 # Files in the Folder can be real or symbolic Links
-ls "Backgrounds/" | awk '{print $1";"$1"."$2}' FS="." > autogen_ListBackground.conf
+ls "Backgrounds/" | awk '{print $1";"$1"."$2}' FS="." > menus/autogen_ListBackground.conf
 
 while true; do
         #dttm=$(date +"%a %R")
