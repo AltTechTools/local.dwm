@@ -7,6 +7,7 @@ sleep 10
 #feh --bg-scale /home/damian/Bilder/Wallpapers/rwds.png #->inblocking script
 
 #Files(picntures) from Backgrounds are listed to select as a Background from the Menu (link files into this folder to have available as an option e.g.: ln -s <source filepath> <desired link name(will be shown as)>)
+# Files in the Folder can be real or symbolic Links
 ls "Backgrounds/" | awk '{print $1";"$1"."$2}' FS="." > autogen_ListBackground.conf
 
 while true; do
