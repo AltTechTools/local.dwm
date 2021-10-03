@@ -1,0 +1,85 @@
+Nur in .dwm2/: @¶@ê—@8@.
+Gemeinsame Unterverzeichnisse: .dwm/audioctr und .dwm2/audioctr.
+diff .dwm/autostart_blocking.sh .dwm2/autostart_blocking.sh
+3,4c3,5
+< feh --bg-scale "$HOME/Pictures/background.jpg" #/home/damian/Bilder/Wallpapers/rwds.png
+< #exec svkbd-mobile-intl &
+---
+> feh --bg-scale /home/damian/Bilder/Wallpapers/rwds.png
+> #feh /home/damian/Bilder/0de03549a05a7ff1b1a439592d95f4c480560f1131d4a7981539ae39cf717074.png 
+> #OPTION 2- NEUTRAL
+diff .dwm/autostart.sh .dwm2/autostart.sh
+4d3
+< #exec svkbd-mobile-intl &
+12c11
+< 	#./settime.sh #e.v. error source
+---
+> 	./settime.sh
+Nur in .dwm/: bak.autostart_blocking.sh.
+Nur in .dwm/: bak.autostart.sh.
+Gemeinsame Unterverzeichnisse: .dwm/bin und .dwm2/bin.
+Nur in .dwm/: customcommand-correct.sh.
+diff .dwm/customcommand.sh .dwm2/customcommand.sh
+37,39c37
+< #sleep 0.1
+< sleep 1
+< #
+---
+> sleep 0.1
+Nur in .dwm/: customcommand-tst.sh.
+Nur in .dwm/: customcommand-tstver.sh.
+Nur in .dwm/: diffrences.txt.
+Nur in .dwm/: .git.
+Nur in .dwm/: keypress_ListMenuPrograms.conf.
+Nur in .dwm/: keypress_ListMsgPrograms.conf.
+Nur in .dwm/: keypress_ListPicPrograms.conf.
+Nur in .dwm/: keypress_ListPrograms.conf.
+Gemeinsame Unterverzeichnisse: .dwm/keySim-old und .dwm2/keySim-old.
+Nur in .dwm/: menu.bak.sh.
+diff .dwm/menu_List.conf .dwm2/menu_List.conf
+7c7
+< Programs;ProgramList2
+---
+> Programme;ProgramList
+diff .dwm/menu.sh .dwm2/menu.sh
+9c9
+< selectedname="$(./confselect.sh menu_List.conf --dmenu '-i -l 9' --dmenu-prompt ' Shortcut ' --dmenu-font 'monospace:size=48' --dmenu-nb '#99C3FC' --dmenu-nf '#FFFFFF' --dmenu-sb '#FF7A7E' --dmenu-sf '#000000')"
+---
+> selectedname="$(./confselect.sh menu_List.conf --dmenu '-i -l 9' --dmenu-prompt 'Shortcut' --dmenu-font 'monospace:size=48' --dmenu-nb '#99C3FC' --dmenu-nf '#FFFFFF' --dmenu-sb '#FF7A7E' --dmenu-sf '#000000')"
+16c16
+< 		echo "$(./selectkeycombos.sh --dmenu-prompt '')"
+---
+> 		echo "$(./selectkeycombos.sh)"
+19c19
+< 		echo "$(./selectkeyGoTo.sh --dmenu-prompt '')"
+---
+> 		echo "$(./selectkeyGoTo.sh)"
+22c22
+< 		echo "$(./selectkeyMvTo.sh --dmenu-prompt '')"
+---
+> 		echo "$(./selectkeyMvTo.sh)"
+25c25
+< 		echo "$(./selectAudioKey.sh --dmenu-promt '')"
+---
+> 		echo "$(./selectAudioKey.sh)"
+28,34c28
+< 		echo "$(./selectProgram.sh --dmenu-promt '')"
+< 	;;
+< 	"ProgramList2")
+< 		echo "$(./selectMenuPrograms.sh --dmenu-prompt '')"
+< 	;;
+< 	"")
+< 		echo ""
+---
+> 		echo "$(./showselectProgram.sh)"
+37c31
+< 		echo "$(./menu.sh --dmenu-prompt '')"
+---
+> 		echo ""
+Nur in .dwm/: selectMenuPrograms.sh.
+Nur in .dwm/: selectMsgProgram.sh.
+Nur in .dwm/: selectPicProgram.sh.
+Nur in .dwm/: selectProgram.sh.
+Nur in .dwm2/: showselectProgram.sh.
+Nur in .dwm2/: start_ListPrograms.conf.
+Nur in .dwm2/: sys.
