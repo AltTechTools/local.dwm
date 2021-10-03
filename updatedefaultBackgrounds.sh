@@ -13,3 +13,5 @@ link "$HOME/Bilder/" "background.png"
 link "$HOME/Bilder/" "background.jpg"
 link "$HOME/Pictures/" "background.png"
 link "$HOME/Pictures/" "background.jpg"
+
+./updateBGMenuList.sh 

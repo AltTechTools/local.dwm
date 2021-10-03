@@ -2,13 +2,16 @@
 
 cd "$HOME/.dwm/"
 #exec svkbd-mobile-intl &
-sleep 10
+sleep 0.2
 #background
 #feh --bg-scale /home/damian/Bilder/Wallpapers/rwds.png #->inblocking script
 
 #Files(picntures) from Backgrounds are listed to select as a Background from the Menu (link files into this folder to have available as an option e.g.: ln -s <source filepath> <desired link name(will be shown as)>)
 # Files in the Folder can be real or symbolic Links
-ls "Backgrounds/" | awk '{print $1";"$1"."$2}' FS="." > menus/autogen_ListBackground.conf
+#ls "Backgrounds/" | awk '{print $1";"$1"."$2}' FS="." > menus/autogen_ListBackground.conf
+./updateBGMenuList.sh
+test -e defaultBG.conf && ./setdefaultBackground.sh
+
 
 while true; do
         #dttm=$(date +"%a %R")
