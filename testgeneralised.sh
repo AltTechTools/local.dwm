@@ -11,8 +11,12 @@ do
     paramArr+=("${param}");
 done
 
+#always expects >1 param, since the last one is not processed
+#for (( i=0; (i+1)<${#paramArr[@]}; i++))
+#was there a reason?
+#now does every param
 
-for (( i=0; (i+1)<${#paramArr[@]}; i++))
+for (( i=0; (i+1)<=${#paramArr[@]}; i++))
 do
   case "${paramArr[i]}" in
     "-h" | "--help")
@@ -42,6 +46,9 @@ do
    ;;
    "--dmenu-sf" | "-sf")
      dmenuargstot="$dmenuargstot -sf ${paramArr[i+1]}"
+   ;;
+   *)
+#	echo "not recongized ${paramArr[i]} (index $i)"
    ;;
   esac
 done

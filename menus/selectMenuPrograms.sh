@@ -1,7 +1,7 @@
 #!/bin/sh
 
 dwmargs=$(./testgeneralised.sh "${@}")
-thelist="keypress_ListMenuPrograms.conf"
+thelist="menus/keypress_ListMenuPrograms.conf"
 
 get_selectedName(){
 
@@ -16,5 +16,6 @@ echo "$selectedname"
 
 selectedt=$(get_selectedName)
 #echo "$selectedt"
-eval "$selectedt & > /dev/null"
+[ "$selectedt" = "" ] || eval "$selectedt & > /dev/null"
+[ "$selectedt" = "" ] && ./customcommand.sh
 echo ""

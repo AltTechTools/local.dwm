@@ -1,7 +1,7 @@
 #!/bin/sh
 
 dwmargs=$(./testgeneralised.sh "${@}")
-thelist="autogen_ListBackground.conf"
+thelist="menus/autogen_ListBackground.conf"
 
 get_selectedName(){
 

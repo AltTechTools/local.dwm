@@ -1,6 +1,5 @@
 #!/bin/sh
 activesink=$(./getAudioSink.sh)
 
-pactl set-sink-mute "$activesink" toggle
-
+pactl set-sink-volume "$activesink" "$1"
 

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 dwmargs=$(./testgeneralised.sh "${@}")
-thelist="keypress_ListPrograms.conf"
+thelist="menus/keypress_ListPrograms.conf"
 
 get_selectedName(){
 
