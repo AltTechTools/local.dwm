@@ -8,4 +8,5 @@ choosedval=$(../confselect.sh audioctr/options.audio_volSet.conf $dwmargs)
 fi
 
 #choosedval="+10%"
-./audio_volSet.sh "$choosedval"
+[ "$choosedval" = "" ] || ./audio_volSet.sh "$choosedval"
+[ "$choosedval" = "" ] &&  echo "no choice"
