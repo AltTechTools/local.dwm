@@ -6,4 +6,4 @@
 transformationmatrix=$(./rotate-screen-matrix.sh -n "8") || echo "failed"
 #echo "New: $transformationmatrix"
 xinput set-prop "8" 'Coordinate Transformation Matrix' "$transformationmatrix"
-xrandr --output "DSI-1" --transform "$transformationmatrix"
+xrandr --output "DSI-1" --transform $transformationmatrix
