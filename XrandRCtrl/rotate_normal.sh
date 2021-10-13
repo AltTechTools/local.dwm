@@ -2,6 +2,7 @@
 #xrandr --output "DSI-1" --rotate "left"
 #./rotate-screen.sh -n "pointer:Goodix Capacitive TouchScreen"
 
+cd "$HOME/.dwm/XrandRCtrl/"
 #./rotate-screen.sh -n "8"
 transformationmatrix=$(./rotate-screen-matrix.sh -n "8") || exit 1
 transformationmatrix2=$(echo "$transformationmatrix" | sed 's/ /,/g')
