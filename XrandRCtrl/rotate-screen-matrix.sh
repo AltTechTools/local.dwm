@@ -8,6 +8,7 @@
 #FUD: Removed Touchpad device
 #	Touchscreen name comes from $2
 #	Now just returns the applicable Transformation Matrix, to be used as a sub script
+#	Exit error code 1 if screenMatrix is empty, due to not being found
 #	TODO:
 #		add  xrandr --output  (e.v. from $3/loop through params and create other options)
 #	
@@ -32,7 +33,7 @@ exit 0
 fi
 
 #touchpadEnabled=$(xinput --list-props "$TouchpadDevice" | awk '/Device Enabled/{print $NF}')
-screenMatrix=$(xinput --list-props "$TouchscreenDevice" | awk '/Coordinate Transformation Matrix/{print $5$6$7$8$9$10$11$12$NF}')
+screenMatrix=$(xinput --list-props "$TouchscreenDevice" | awk '/Coordinate Transformation Matrix/{print $5$6$7$8$9$10$11$12$NF}') || return 1
 
 # Matrix for rotation
 # ⎡ 1 0 0 ⎤
@@ -60,7 +61,8 @@ left_float='0.000000,-1.000000,1.000000,1.000000,0.000000,0.000000,0.000000,0.00
 #⎣  0 0 1 ⎦
 right='0 1 0 -1 0 1 0 0 1'
 
-#echo "$screenMatrix"
+#echo "test: $screenMatrix"
+[ "$screenMatrix" = "" ] && exit 1
 if [ $screenMatrix == $normal_float ] && [ "$1" != "-n" ]
 then
   #echo "Upside down"
