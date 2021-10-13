@@ -9,4 +9,4 @@ transformationmatrix2=$(echo "$transformationmatrix" | sed 's/ /,/g')
 #exit 1
 #echo "New: $transformationmatrix"
 xinput set-prop "8" 'Coordinate Transformation Matrix' "$transformationmatrix"
-xrandr --output "DSI-1" --transform "$transformationmatrix2"
+xrandr --output "DSI-1" --transform $transformationmatrix2
