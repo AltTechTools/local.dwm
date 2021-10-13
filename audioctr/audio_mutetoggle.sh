@@ -1,5 +1,6 @@
-activesink=$(pactl info | grep .a2dp_sink | awk '{print $2}')
+#!/bin/sh
+activesink=$(./getAudioSink.sh)
 
 pactl set-sink-mute "$activesink" toggle
-#echo "$activesink"
+
 

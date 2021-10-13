@@ -1,7 +1,7 @@
 #!/bin/sh
 
 dwmargs=$(./testgeneralised.sh "${@}")
-thelist="keypress_ListMvTo.conf"
+thelist="menus/keypress_ListMvTo.conf"
 
 get_selectedName(){
 
@@ -11,6 +11,7 @@ else
 selectedname=$(./confselect.sh $thelist $dwmargs)
 fi
 
+[ "$selectedname" = "" ] && ./customcommand.sh &
 echo "$selectedname"
 }
 

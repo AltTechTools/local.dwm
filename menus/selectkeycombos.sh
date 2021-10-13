@@ -16,13 +16,13 @@ get_selectedName(){
 #selectedname="$(get_selected)" # "keypress_$(get_selected).sh"
 #selectedname="$(./confselect.sh keypress_List.conf)" #working
 if [ "${#dwmargs}" -lt 1 ];then
-selectedname="$(./confselect.sh keypress_List.conf --dmenu '-i -l 9' --dmenu-prompt 'Shortcut' --dmenu-font 'monospace:size=48' --dmenu-nb '#99C3FC' --dmenu-nf '#FFFFFF' --dmenu-sb '#FF7A7E' --dmenu-sf '#000000')" 
+selectedname="$(./confselect.sh menus/keypress_List.conf --dmenu '-i -l 9' --dmenu-prompt 'Shortcut' --dmenu-font 'monospace:size=48' --dmenu-nb '#99C3FC' --dmenu-nf '#FFFFFF' --dmenu-sb '#FF7A7E' --dmenu-sf '#000000')" 
 else
-selectedname=$(./confselect.sh keypress_List.conf $dwmargs)
+selectedname=$(./confselect.sh menus/keypress_List.conf $dwmargs)
 fi
 
 #e.g. ./confselect.sh keypress_List.conf  --dmenu-prompt "test" --dmenu-font "monospace:size=36" --dmenu-nb "#FF0000"
-
+[ "$selectedname" = "" ] && ./customcommand.sh &
 echo "$selectedname"
 }
 

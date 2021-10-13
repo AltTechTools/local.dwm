@@ -15,6 +15,8 @@
 #dmenuargs="$3"
 #echo "$3"
 
+cd "$HOME/.dwm"
+
 #declare -a paramArr
 paramArr=()
 dmenuargs=""
@@ -27,7 +29,6 @@ do
 done
 
 dmenuargstot=$(./testgeneralised.sh "${@}")
-
 
 if false; then
 for (( i=0; (i+1)<${#paramArr[@]}; i++))
@@ -74,9 +75,11 @@ if [ "${#dmenuargs}" -lt 1 ]; then
 fi
 #echo "$dmenuargs"
 
-menulist=$(grep -v "#" "menus/$1")
+#menulist=$(grep -v "#" "menus/$1")
+menulist=$(grep -v "#" "$1")
 #selected=$(echo "$menulist" | awk '{print $1}' FS=";" | dmenu $dmenuargs -p "$dmenuprompt")
 #selected=$(echo "$menulist" | awk '{print $1}' FS=";" | dmenu $(echo "$dmenuargstot"))
 selected=$(echo "$menulist" | awk '{print $1}' FS=";" | dmenu $dmenuargstot)
 #echo "$menulist" | grep "$selected;" | awk '{print $2}' FS=";"
 echo "$menulist" | grep -- "^${selected};" | sed "s/$selected;//"
+#echo "$PWD"
