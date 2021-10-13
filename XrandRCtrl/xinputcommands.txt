@@ -1,0 +1,73 @@
+Gist with skript: https://gist.github.com/fssSGJ/76b0106675a50349e845940b09ed9f72
+
+https://askubuntu.com/questions/368317/rotate-touch-input-with-touchscreen-and-or-touchpad
+
+sinput -list
+xinput watch-props 8 
+//or name ".." e.v. pointer:...
+
+xinput -
+
+#portrait (left)
+
+xrandr -o left
+xinput set-prop "Your Touchscreen's Name" --type=float "Coordinate Transformation Matrix" 0 -1 1 1 0 0 0 0 1
+
+xinput set-prop "Your Touchscreen's Name" --type=float "Coordinate Transformation Matrix" 0 0 0 0 0 0 0 0 0
+
+RANDR  excample for left:
+⎡  0 -1  1 ⎤
+⎜  1  1  0 ⎥
+⎣  0  0  1 ⎦
+
+
+Seen pinephone Values(in normal mode):
+⎡  1  0  0 ⎤
+⎜  0  1  0 ⎥
+⎣  0  0  1 ⎦
+
+
+
+
+e.g. (also acctually used with xrandr)
+⎡  0 1 0 ⎤
+⎜ -1 0 1 ⎥
+⎣  0 0 1 ⎦
+
+
+udging from the question it is a standard coordinate transform matrix.
+
+So:
+
+⎡x_out⎤   ⎡ a b c ⎤   ⎡ x_in ⎤
+⎜y_out⎥ = ⎜ d e f ⎥ * ⎜ y_in ⎥
+⎣z_out⎦   ⎣ 0 0 1 ⎦   ⎣ z_in ⎦
+
+with z_out = z_in = 1.
+
+I.e.
+
+x_out = a * x_in + b * y_in + c
+y_out = d * x_in + e * y_in + f
+
+The example matrix you gave for right rotation
+
+⎡ 0 -1 1 ⎤
+⎜ 1  0 0 ⎥
+⎣ 0  0 1 ⎦
+
+thus means
+
+x_out = 1 - y_in
+y_out = x_in
+
+for rotating left it would be the other way around i.e.:
+
+x_out = y_in
+y_out = 1 - x_in
+
+giving the matrix
+
+⎡  0 1 0 ⎤
+⎜ -1 0 1 ⎥
+⎣  0 0 1 ⎦
