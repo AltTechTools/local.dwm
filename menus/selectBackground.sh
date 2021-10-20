@@ -19,9 +19,14 @@ selectedt=$(get_selectedName)
 #eval "feh --bg-scale $selectedt & > /dev/null"
 cd "$HOME/.dwm/Backgrounds"
 #echo "feh --bg-scale $selectedt &"
-echo "$selectedt" > ../defaultBG.conf
+#echo "$selectedt" > ../defaultBG.conf
+echo "$selectedt"
+#exit 1
+cd ./../
+ln -s -f "./Backgrounds/$selectedt" "defaultBG.ln"
 #feh --bg-scale "$selectedt" &
 echo $(pwd)
-test "$selectedt" = "" && cd ./../ && ./menus/selectMenuPrograms.sh
-test "$selectedt" = "" || ./../setdefaultBackground.sh
+#test "$selectedt" = "" && cd ./../ && ./menus/selectMenuPrograms.sh
+test "$selectedt" = "" && ./menus/selectMenuPrograms.sh
+test "$selectedt" = "" || ./setdefaultBackground.sh
 echo ""
