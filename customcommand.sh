@@ -3,6 +3,7 @@
 cd "$HOME/.dwm"
 #xsetroot -name "Custom"
 ./updatebar.sh "custom"
+#kill $(ps ax | grep "dmenu")
 #./keypress_switchWindow.sh
 #test=$(./selectkeycombos.sh)
 #"./keySim/$test"
