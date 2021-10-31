@@ -6,6 +6,8 @@ dmenuargs=""
 dmenuprompt=""
 dmenuargstot=""
 
+echo "called translatdmenuargs" > dmenuargs.log
+
 for param in "$@" 
 do
     paramArr+=("${param}");
@@ -18,6 +20,7 @@ done
 
 for (( i=0; (i+1)<=${#paramArr[@]}; i++))
 do
+  echo "$i" >> dmenuargs.log
   case "${paramArr[i]}" in
     "-h" | "--help")
       echo "e.g.:./confselect.sh keypress_List.conf --dmenu '-l 8' --dmenu-prompt \"test\" --dmenu-font \"monospace:size=36\" "
@@ -51,10 +54,10 @@ do
 	dmenuargstot="$dmenuargstot -l ${paramArr[i+1]}"
    ;;
    *)
-#	echo "not recongized ${paramArr[i]} (index $i)"
+	echo "not recongized ${paramArr[i]} (index $i)" >> dmenuargs.log
    ;;
   esac
 done
-
+echo "$dmenuargstot" >> dmenuargs.log
 echo "${dmenuargstot}"
 

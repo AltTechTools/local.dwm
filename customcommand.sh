@@ -19,7 +19,7 @@ windowid=$(echo "ibase=16; $winidhex" | bc)
 #keyaction="Super_L+Return"
 prcbef=$(ps ax | grep -c "dmenu")
 #keyaction="$(./selectkeycombos.sh)" #this fucks everything somehow
-keyaction="$(./menu.sh --dmenu-length 9)"
+keyaction="$(./menu.sh)"
 #keyaction="Super_R+b" #soo a 'B' does not work, only 'b'
 
 #all use less, the capital B not b was the problem

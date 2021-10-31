@@ -1,6 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
 #echo "1"
+
+. ./genericdmenuargfilter.sh
+dmenuargs=$(filter_dmenuArgs "${@}")
+#echo "$dmenuargs"
+#exit 0
 dwmargs=$(./testgeneralised.sh "${@}")
 #echo "2"
 #echo "$dwmargs"

@@ -40,16 +40,22 @@ do
     paramArr+=("${param}");
 done
 . ./genericdmenuargfilter.sh
+#echo "${@}" > beforefilter.txt
 dmenuargs=$(filter_dmenuArgs "${@}")
+#echo "${dmenuargs}" > afterfilter.txt
 
 #echo "${dmenuargs}"
-
+#exit 0
 
 if [ "${#dmenuargs}" -lt 1 ]; then
   dmenuargs=$(filter_dmenuArgs "-l 9 -p \"Select Action: \" -fn \"monospace:size=72\"")
 fi
+
+dmenuargstot=$(./translatedmenuargs.sh $dmenuargs)
+#echo "$dmenuargstot" > translated.txt
+#./translatedmenuargs.sh "$dmenuargs" > translated.txt
 #echo "$dmenuargs"
-echo "$dmenuargsorig"
+#echo "$dmenuargsorig"
 
 #menulist=$(grep -v "#" "menus/$1")
 menulist=$(grep -v "#" "$1")
