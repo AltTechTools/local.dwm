@@ -6,3 +6,4 @@ test -e defaultBG.ln || ./updatedefaultBackgrounds.sh
 #test -e defaultBG.conf && ./setdefaultBackground.sh
 #exec svkbd-mobile-intl &
 pulseaudio --start
+dunst &

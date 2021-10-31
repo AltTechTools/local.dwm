@@ -18,6 +18,11 @@ else
 selectedsubmenu=$(./confselect.sh menus/menu_List.conf $dwmargs)
 fi
 
+
+#test
+./notifybattery.sh
+
 selectedsubmenuScript=$(echo "$selectedsubmenu" | awk '{print $1}' FS=';')
 selectedsubmenuParams=$(echo "$selectedsubmenu" | awk '{print $2}' FS=';')
 echo "x($selectedsubmenuScript $dwmargs $selectedsubmenuParams)"
+#echo "$($selectedsubmenu $dwmargs)"

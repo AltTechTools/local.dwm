@@ -1,0 +1,2 @@
+ 2019  upower -i $(upower -e | grep "/battery_") | grep "percentage" | awk '{print $2}'
+ 2025  history | grep "2019" > batcmd.txt
