@@ -13,7 +13,8 @@ touch "test.touch"
 ./updateBGMenuList.sh
 test -e defaultBG.ln && ./setdefaultBackground.sh
 
-systemctl start sendmail.service &
+#start if disabled(e.g. for speeding up boot time)
+[ systemctl status sendmail.service | grep -c "Active: active" -lt "1" ] && systemctl start sendmail.service &
 
 while true; do
         #dttm=$(date +"%a %R")

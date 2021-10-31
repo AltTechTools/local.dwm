@@ -17,6 +17,18 @@
 
 cd "$HOME/.dwm"
 
+round()
+{
+	echo $((($1 + $2/2) / $2))
+}
+round_up()
+{
+	let "more=$1+$2-1"
+	let "divided=($more / $2)"
+#	echo $($more / $2)
+	echo "$divided"
+}
+
 #declare -a paramArr
 paramArr=()
 dmenuargs=""
@@ -27,59 +39,39 @@ for param in "$@"
 do
     paramArr+=("${param}");
 done
+. ./genericdmenuargfilter.sh
+dmenuargs=$(filter_dmenuArgs "${@}")
 
-dmenuargstot=$(./testgeneralised.sh "${@}")
-
-if false; then
-for (( i=0; (i+1)<${#paramArr[@]}; i++))
-do
-  case "${paramArr[i]}" in
-    "-h" | "--help")
-      echo "e.g.:./confselect.sh keypress_List.conf --dmenu '-l 8' --dmenu-prompt \"test\" --dmenu-font \"monospace:size=36\" --dmenu-nb \"#FF0000\""
-      echo "-h/--help: This Help"
-      exit
-    ;;
-    "--dmenu")
-#      dmenuargs="${paramArr[i+1]}"
-      dmenuargstot="$dmenuargstot ${paramArr[i+1]}"
-   ;;
-   "--dmenu-prompt")
-#     dmenuprompt="${paramArr[i+1]}"
-     dmenuargstot="$dmenuargstot -p ${paramArr[i+1]}"
-   ;;
-   "--dmenu-font")
-     dmenuargstot="$dmenuargstot -fn ${paramArr[i+1]}"
-   ;;
-   "--dmenu-nb")
-     dmenuargstot="$dmenuargstot -nb ${paramArr[i+1]}"
-   ;;
-   "--dmenu-nf")
-     dmenuargstot="$dmenuargstot -nf ${paramArr[i+1]}"
-   ;;
-   "--dmenu-sb")
-     dmenuargstot="$dmenuargstot -sb ${paramArr[i+1]}"
-   ;;
-   "--dmenu-sf")
-     dmenuargstot="$dmenuargstot -sf ${paramArr[i+1]}"
-   ;;
-  esac
-done
-fi
-
-#echo "${dmenuargstot}"
-
+#echo "${dmenuargs}"
 
 
 if [ "${#dmenuargs}" -lt 1 ]; then
-  dmenuargs='-l 9 -p "Select Action: " -fn "monospace:size=72"'
+  dmenuargs=$(filter_dmenuArgs "-l 9 -p \"Select Action: \" -fn \"monospace:size=72\"")
 fi
 #echo "$dmenuargs"
+echo "$dmenuargsorig"
 
 #menulist=$(grep -v "#" "menus/$1")
 menulist=$(grep -v "#" "$1")
 #selected=$(echo "$menulist" | awk '{print $1}' FS=";" | dmenu $dmenuargs -p "$dmenuprompt")
 #selected=$(echo "$menulist" | awk '{print $1}' FS=";" | dmenu $(echo "$dmenuargstot"))
-selected=$(echo "$menulist" | awk '{print $1}' FS=";" | dmenu $dmenuargstot)
+selectionList=$(echo "$menulist" | awk '{print $1}' FS=";")
+
+dyndwm=$(printenv DWM_DYNDMENU)
+if [ "$dyndwm" = "1" ]; then
+	listlen=$(echo "$selectionList" | wc -l)
+	echo "$DWM_DMENU_LENGTH" > tmpX.txt
+	exit 0
+	pagescount=$(round_up $listlen $(printenv DWM_DMENU_LENGTH))
+	pagelist=$(echo "")
+	for i in {1..$pagescount}
+	do
+		pageslist=$({ echo "$pageslist"; echo "$i"; })
+	done
+	echo "$pageslist"
+fi
+
+selected=$(echo "$selectionList" | dmenu $dmenuargstot)
 #echo "$menulist" | grep "$selected;" | awk '{print $2}' FS=";"
 echo "$menulist" | grep -- "^${selected};" | sed "s/$selected;//"
 #echo "$PWD"
