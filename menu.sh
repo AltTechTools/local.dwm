@@ -1,5 +1,6 @@
 #!/bin/bash
-
+# -- doesnt work when started more than once
+#./menu_onopen.sh > /dev/null
 #menulist=$(grep -v "#" menu_List.conf)
 #selected=$(echo "$menulist" | awk '{print $1}' FS=";" | dmenu -p "Menü")
 #echo "$menulist" | grep "$selected;" | awk '{print $2}' FS=";"
@@ -28,5 +29,6 @@ fi
 selectedsubmenuScript=$(echo "$selectedsubmenu" | awk '{print $1}' FS=';')
 selectedsubmenuParams=$(echo "$selectedsubmenu" | awk '{print $2}' FS=';')
 
+#./menu_onclose.sh > /dev/null
 echo "$($selectedsubmenuScript $dwmargs $selectedsubmenuParams)"
 #echo "$($selectedsubmenu $dwmargs)"

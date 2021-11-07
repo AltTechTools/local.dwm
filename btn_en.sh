@@ -3,9 +3,10 @@
 cd "$HOME/.dwm"
 #xsetroot -name "Custom"
 ./updatebar.sh "custom"
-#./btnS_switchModes.sh
-./menu_onopen.sh #> /dev/null
-#./btnS_symmode.sh
+notify-send "enter" "enter"
+#xdotool key Return
+./customcommand.sh
+exit 0
 #kill $(ps ax | grep "dmenu")
 #./keypress_switchWindow.sh
 #test=$(./selectkeycombos.sh)
@@ -43,9 +44,4 @@ sleep 1
 #
 xdotool key "$keyaction"
 #sleep 6
-#./btnS_switchModes.sh
-
-#./btnS_actnmode.sh
-cd "$HOME/.dwm"
-./menu_onclose.sh & #> /dev/null
 ./settime.sh
