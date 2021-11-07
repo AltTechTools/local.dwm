@@ -23,7 +23,7 @@ fi
 
 
 #test
-[ "$selectedsubmenu" = "" ] && ./notifybattery.sh
+#[ "$selectedsubmenu" = "" ] && ./notifybattery.sh
 [ "$selectedsubmenu" = "" ] && echo "" && exit 0
 
 selectedsubmenuScript=$(echo "$selectedsubmenu" | awk '{print $1}' FS=';')

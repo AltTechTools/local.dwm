@@ -4,6 +4,7 @@
 #	echo "allready ./btnS_symmode.sh" #> /dev/null
 #else
 #	[ -e menuactive ] || 
-./btnS_symmode.sh
+./pinephone/battery/notifybattery.sh
+./pinephone/buttons/btnS_symmode.sh
 #fi
 #touch menuactive
