@@ -23,7 +23,8 @@ cd "$HOME/.dwm/Backgrounds"
 echo "$selectedt"
 #exit 1
 cd ./../
-ln -s -f "./Backgrounds/$selectedt" "defaultBG.ln"
+#ln -s -f "./Backgrounds/$selectedt" "defaultBG.ln"
+./linkdwm-default.sh "background" "$selectedt"
 #feh --bg-scale "$selectedt" &
 echo $(pwd)
 #test "$selectedt" = "" && cd ./../ && ./menus/selectMenuPrograms.sh

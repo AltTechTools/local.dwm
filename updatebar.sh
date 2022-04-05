@@ -2,6 +2,12 @@
 
 defaultbarsize=$(cat barsize.conf) #5 
 
+Main(){
+	local bartext=$(get_bartext "$1")
+	echo "$bartext"
+	xsetroot -name "$bartext"
+}
+
 sub_result(){
 case "$1" in
 	"time")
@@ -9,6 +15,9 @@ case "$1" in
 	;;
 	"custom")
 		echo "CUSTOM"
+	;;
+	"battery")
+		echo "Bat: $(get_bat)"
 	;;
 	*)
 		echo "else"
@@ -19,8 +28,13 @@ esac
 
 get_time(){
 #dttm=$(date +"%a %R %s") #test
-dttm=$(date +"%a %R")
+local dttm=$(date +"%a %R")
 echo "${dttm}"
+}
+
+get_bat(){
+local percentage=$(dev.ln/battery/getbattery.sh)
+echo "$percentage"
 }
 
 pad_text(){
@@ -43,14 +57,10 @@ echo "$x"
 }
 
 get_bartext(){
-subtext=$(sub_result "$1")
-paddedtext=$(pad_text "$subtext")
+local subtext=$(sub_result "$1")
+local paddedtext=$(pad_text "$subtext")
 
 echo "| $(whoami): $paddedtext |"
 }
 
-bartext=$(get_bartext "$1")
-echo "$bartext"
-xsetroot -name "$bartext"
-#xsetroot -name "$(get_bartext "$1")"
-
+Main "$1"

@@ -1,3 +1,4 @@
 #/bin/sh
-percentage=$(./getbattery.sh)
-notify-send "Battery" "$percentage"
+#percentage=$(dev.ln/battery/getbattery.sh)
+#notify-send "Battery" "$percentage"
+./updatebar.sh "battery"

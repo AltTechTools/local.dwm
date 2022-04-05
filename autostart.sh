@@ -10,6 +10,7 @@ sleep 0.2
 # Files in the Folder can be real or symbolic Links
 #ls "Backgrounds/" | awk '{print $1";"$1"."$2}' FS="." > menus/autogen_ListBackground.conf
 touch "test.touch"
+./monitors.sh
 ./updateBGMenuList.sh
 test -e defaultBG.ln && ./setdefaultBackground.sh
 
