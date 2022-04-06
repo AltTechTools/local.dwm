@@ -1,5 +1,5 @@
 #!/bin/sh
-
+source menus/selectsource.sh
 dwmargs=$(./testgeneralised.sh "${@}")
 thelist="menus/keypress_ListSettings.conf"
 
@@ -16,6 +16,7 @@ echo "$selectedname"
 
 selectedt=$(get_selectedName)
 #echo "$selectedt"
-[ "$selectedt" = "" ] || eval "$selectedt & > /dev/null"
+#[ "$selectedt" = "" ] || "selectedt & > /dev/null"
+[ "$selectedt" = "" ] || eval "${selectedt} & > /dev/null"
 [ "$selectedt" = "" ] && ./customcommand.sh
 echo ""
