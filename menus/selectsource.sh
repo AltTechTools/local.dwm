@@ -36,18 +36,21 @@ echo "$res"
 }
 
 _setbg(){
-notify-send "BG" "$1"
+./linkdwm-default.sh "background"
+./setdefaultBackground.sh
+notify-send -t 800 "BG" "$1"
 }
 
 _sendkeysym(){
 [ "$1" = "" ] && return 0
-xdotool key "$1"
-notify-send "Key" "$1"
+notify-send -t 2000 "Key" "$1"
+sleep 2 && xdotool key "$1" &
+
 }
 
 _start_exec(){
 "$@" > /dev/null &
-notify-send "start" "$1"
+notify-send -t 750 "start" "$1"
 #echo "tst" >&2
 echo "exit"
 }

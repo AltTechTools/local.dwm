@@ -14,6 +14,10 @@ case "$1" in
 	path="$PATH"
 	lnname="dwm-default-filemgr.ln"
   ;;
+  "mail")
+	path="$PATH"
+	lnname="dwm-default-mail.ln"
+  ;;
   "torrent")
 	path="$PATH"
 	lnname="dwm-default-torrent.ln"
