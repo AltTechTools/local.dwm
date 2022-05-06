@@ -19,6 +19,25 @@ done
 echo "$res"
 }
 
+
+_start_SelectionOfExisting(){
+theList="menus/menu_$1.conf"
+res="reopen"
+while [ "$res" = "reopen" ]
+do
+selectedt=$(_get_selectedNameFromListFilterExist "$theList")
+#notify-send "select" "${selectedt}"
+#echo "$selectedt"
+[ "$selectedt" = "" ] && selectedt="echo exit"
+#cd "$HOME/.dwm"
+res="$(${selectedt})"
+[ "$res" = "exit" ] && exit 0
+done
+[ "$res" = "lvlup" ] && res="reopen"
+echo "$res"
+}
+
+
 _start_SelectionKeysym(){
 theList="menus/keypress_$1.conf"
 selectedt=$(_get_selectedNameFromList "$theList")
@@ -68,6 +87,30 @@ fi
 
 echo "$selectedname"
 }
+
+_get_selectedNameFromListFilterExist(){
+list=""
+while read -r line
+do
+        file=$(echo "$line" | awk '{print $3}' FS=';')
+        line=$(echo "$line" | awk '{print $1,$2}' FS=';' OFS=';')
+        [ -e "$file" ] && list=$(printf "%s\n%s\n" "$list" "$line")
+done < "$1"
+>&2 echo "file list:>$list<"
+#list=$(printf "%s\n%s\n" "connect;connect" "disconnect;disconnect")
+
+if [ "${#dwmargs}" -lt 1 ];then
+#  selectedname="$(_confselectList ${list} --dmenu '-i -l 11' --dmenu-prompt '..' --dmenu-font 'monospace:size=48' --dmenu-nb '#99C3FC' --dmenu-nf '#FFFFFF' --dmenu-sb '#FF7A7E' --dmenu-sf '#000000')"
+#  dwmargs="--dmenu '-i -l 11' --dmenu-prompt '..' --dmenu-font 'monospace:size=48' --dmenu-nb '#99C3FC' --dmenu-nf '#FFFFFF' --dmenu-sb '#FF7A7E' --dmenu-sf '#000000')"
+  selectedname=$(_confselect "$list")
+else
+#selectedname=$(_confselect $list $dwmargs)
+  selectedname=$(_confselect "$list" $dwmargs)
+fi
+
+echo "$selectedname"
+}
+
 
 _bluetooth_do(){
   #source $HOME/.dwm/menus/selectbldev.src
