@@ -1,0 +1,124 @@
+#!/bin/sh
+source ./genericdmenuarg.src
+source ./dmenu.src
+_let(){
+	let "_let_res=$1"
+	#local y="$_let_res"
+	echo "$_let_res"
+	unset _let_res
+}
+_confselectList(){
+	_confselect_prepare ${@}
+	menulist=$(grep -v "^#" "$1")
+	echo $(_confselect_select)
+	unset menulist
+}
+_confselect(){
+	#local x=$(_let "1+2")
+	#echo "$y;$x" >&2
+	_confselect_prepare "$@"
+	menulist="$1"
+	echo $(_confselect_select)
+	unset menulist
+}
+round()
+{
+	echo $((($1 + $2/2) / $2))
+}
+round_up()
+{
+	local more=$(_let "$1+$2-1")
+	local divided=$(_let "($more / $2)")
+	echo "$divided"
+}
+
+_confselect_prepare(){
+	cd "$HOME/.dwm"
+	paramArr=()
+	dmenuargs=""
+	dmenuprompt=""
+	dmenuargstot=""
+
+	for param in "$@" 
+	do
+	    paramArr+=("${param}");
+	done
+	dmenuargs=$(filter_dmenuArgs "${@}")
+
+	if [ "${#dmenuargs}" -lt 1 ]; then
+	  dmenuargs=$(filter_dmenuArgs "-l 9 -p \"Select Action: \" -fn \"monospace:size=72\"")
+	fi
+
+	#dmenuargstot=$(./translatedmenuargs.sh $dmenuargs)
+	dmenuargstot=$(translate_dmenuArgs $dmenuargs)
+}
+
+_confselect_select(){
+	selectionList=$(echo "$menulist" | awk '{print $1}' FS=";")
+
+	dyndwm=$(printenv DWM_DYNDMENU)
+#	if [ "$dyndwm" = "1" ]; then
+	listlen=$(echo "$selectionList" | wc -l)
+#	echo "$DWM_DMENU_LENGTH" > tmpX.txt
+#		return 0
+#		pagescount=$(round_up $listlen $(printenv DWM_DMENU_LENGTH))
+	local pagelen=$(_get_defaultdmenuListLen)
+	local fullpagelen=$(_let "$pagelen")
+	listlen=$(_let "$listlen-2") #first up / last down not needeed
+	if [ $listlen -gt $fullpagelen ]; then
+	  local pagescount=$(round_up $listlen $pagelen)
+	  local pageslist=$(echo "1;1")
+		#for ((i=2;i<=$pagescount;i++))	#for i in { 1..$pagescount
+		#do
+		#	#echo "$i" >&2
+		#	pageslist=$( printf "%s\n%s" "$pageslist" "$i;$i")
+		#done
+		#echo "$pageslist" >&2
+		#selectionList=$(printf "%s\n%s" "$pageslist" "$selectionList")
+	  local pagesindex=1
+	  local selectionListFull="$selectionList"
+	fi
+	while true
+	do
+		if [ $listlen -gt $fullpagelen ]; then
+		  if [ $pagesindex -eq $pagescount ]; then
+		  local pstart=$(_let "(($pagesindex - 1)*$pagelen)+1")
+		  local pend=$(_let "$pstart+$pagelen+1")
+		  local selectionList=$(echo "$selectionListFull" | awk "NR>$pstart&&NR<=$pend {print}")
+			local selectionList=$(printf "%s\n%s" "'UP'" "$selectionList")
+		  else
+		  	if [ $pagesindex -gt 1 ]; then
+		  		local pstart=$(_let "($pagesindex - 1)*$pagelen+1") #+1
+		  		local pend=$(_let "$pstart+$pagelen")
+		  		local selectionList=$(echo "$selectionListFull" | awk "NR>$pstart&&NR<=$pend {print}")
+				local selectionList=$(printf "%s\n%s\n%s" "'UP'" "$selectionList" "'$pagesindex/$pagescount'")
+		  	fi
+			if [ $pagesindex -eq 1 ]; then
+		  		local pstart=$(_let "($pagesindex - 1)*$pagelen")
+		  		local pend=$(_let "$pstart+$pagelen+1")
+		  		local selectionList=$(echo "$selectionListFull" | awk "NR>$pstart&&NR<=$pend {print}")
+				local selectionList=$(printf "%s\n%s" "$selectionList" "'$pagesindex/$pagescount'")
+			fi
+		  fi
+		  #echo "$selectionList" | awk "NR>$pstart&&NR<=$pend {print}">&2
+		fi
+#	fi
+	local selected=$(echo "$selectionList" | dmenu $dmenuargstot)
+	case "$selected" in
+		"'UP'")
+			local pagesindex=$(_let "$pagesindex-1")
+			[ $pagesindex -lt 1 ] && local pagesindex=1
+		;;
+		"'$pagesindex/$pagescount'")
+			local pagesindex=$(_let "$pagesindex+1")
+                        [ $pagesindex -gt $pagescount ] && local pagesindex=$pagescount
+		;;
+		*)
+			break;;
+	esac
+	done
+	local selected=$(echo "${selected}" | sed 's/\[/\\\[/g' | sed 's/]/\\]/g')
+	local sedselected=$(echo "${selected}" | sed 's/\//\\\//g')
+
+	echo "$menulist" | grep -- "^${selected};" | sed "s/$sedselected;//"
+}

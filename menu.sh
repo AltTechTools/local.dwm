@@ -1,8 +1,11 @@
 #!/bin/bash
 cd "$HOME/.dwm"
-. ./genericdmenuargfilter.sh
+#source ./genericdmenuarg.src
+#. ./genericdmenuargfilter.sh
+source menus/selectsource.src
 dwmargs=$(filter_dmenuArgs "${@}")
-source menus/selectsource.sh
+#echo "${dwmargs}" > dwmargs.txt
+
 #//test
 #selectedsubmenu="$(./confselect.sh menus/menu_List.conf)"
 #return 0

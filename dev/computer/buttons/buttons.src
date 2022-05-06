@@ -1,0 +1,25 @@
+#!/bin/sh
+_set_hwbuttonsMode(){
+	case "$1" in
+		"action")
+			_set_hwbuttons_action
+		;;
+		"navigation")
+			_set_hwbuttons_navigation
+		;;
+		*)
+			_set_hwbuttons_default
+		;;
+	esac
+}
+
+_set_hwbuttons_default(){
+	_set_hwbuttons_navigation
+}
+_set_hwbuttons_navigation(){
+	echo "symmode not implemented" >&2
+}
+
+_set_hwbuttons_action(){
+	echo "actionmode not implemented" >&2
+}

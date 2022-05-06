@@ -1,0 +1,48 @@
+#/bin/bash
+cd "$HOME/.dwm"
+_listrelevantdev(){
+devices="$2"
+[ "$devices" = "" ] && devices="devices"
+#devices="paired-devices"
+#devices="$2"
+
+while read -r dev;
+do
+	#echo "d: $dev" ;
+	local del=$(echo "$dev" | awk '{print $1,$2}')
+	local mac=$(echo "$del" | awk '{print $2}')
+	local del=$(echo "${del} " | sed 's/\//\\\//g')
+	local label=$(echo "$dev" | sed "s/${del}//")
+	local unlabel=$(echo "$mac" | sed 's/:/-/g')
+	if [ "$1" = "all" ]; then
+	  echo "$label;$mac"
+	else
+	  [ "$label" = "$unlabel" ] || echo "$label;$mac"
+	fi
+done <<< "$(bluetoothctl $devices | grep -v '$\[')"
+}
+
+_select(){
+	source confselect.src
+	source dmenu.src
+	list=$(_listrelevantdev "$1" "$2")
+	args="$(_get_defaultdmenuArgs)"
+	echo $(_confselect "$list" $args)
+}
+_action(){
+	source confselect.src
+	source dmenu.src
+	list=$(printf "%s\n%s\n" "connect;connect" "disconnect;disconnect")
+	args="$(_get_defaultdmenuArgs)"
+	selected=$(_confselect "$list" $args)
+	echo "$selected"
+	#scan on
+	#kill $! //last bg process
+
+}
+_bl_do(){
+	action="$1"
+	mac=$(_select "$3" "$2")
+	bluetoothctl "$action" "$mac"
+}
+

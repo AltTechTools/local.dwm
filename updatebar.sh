@@ -1,6 +1,6 @@
 #!/bin/sh
 
-defaultbarsize=$(cat barsize.conf) #5 
+defaultbarsize=$(cat conf/dwm_barsize.conf) #5 
 
 Main(){
 	local bartext=$(get_bartext "$1")
@@ -33,8 +33,10 @@ echo "${dttm}"
 }
 
 get_bat(){
-local percentage=$(dev.ln/battery/getbattery.sh)
-echo "$percentage"
+source dev.ln/battery/battery.src
+#local percentage=$(dev.ln/battery/getbattery.sh)
+#echo "$percentage"
+echo $(_getBatteryPerc)
 }
 
 pad_text(){
@@ -50,7 +52,7 @@ done
 
 local xlen="${#x}"
 
-[ "$xlen" -gt "$defaultbarsize" ] && echo "$xlen" > barsize.conf
+[ "$xlen" -gt "$defaultbarsize" ] && echo "$xlen" > conf/dwm_barsize.conf
 #let "xlen=10"
 
 echo "$x"

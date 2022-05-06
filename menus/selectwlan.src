@@ -1,0 +1,64 @@
+#/bin/bash
+cd "$HOME/.dwm"
+_listrelevantdev(){
+isopen=""
+while read -r dev;
+do
+	if echo "$dev" | grep "^ESSID:" > /dev/null; then
+		ssid=$(echo "${dev}" | awk '{print $2}' FS='"')
+		[ "$ssid" = "" ] && ssid="(hidden)"
+		[ "$isopen" = "" ] && label="${ssid}"
+		[ "$isopen" = "x" ] && label="(free)${ssid}"
+		echo "${label};${label}"
+	else
+		if echo "$dev" | grep ":off" > /dev/null; then
+			isopen="x"
+		else
+			isopen=""
+		fi
+	fi
+
+done <<< "$(sudo -A iwlist wlo1 scan | grep -e 'ESSID' -e 'Encryption key' | sed 's/     //g')" || exit 1
+}
+
+_select(){
+	cd ".dwm"
+	source confselect.src
+	source dmenu.src
+	list=$(_listrelevantdev) || return 1
+	[ "$list" = "" ] && return 1
+	args="$(_get_defaultdmenuArgs)"
+	echo $(_confselect "$list" $args)
+	cd ..
+}
+
+_connect(){
+	cd "$HOME"
+#$1 = interface
+	selected=$(_select) || return 4
+	if echo "${selected}" | grep "^(free)" > /dev/null; then
+		ssid="$(echo ${selected} | sed 's/(free)//')"
+		sudo -A iw "$1" connect "${ssid}" || return 3
+	else
+		[ -d ".wifi" ] || mkdir ".wifi"
+		cd ".wifi"
+		[ -d "${selected}" ] || mkdir "${selected}"
+		cd "${selected}"
+		if [ ! -e wifi.conf ]; then
+		#	cd "${selected}"
+		#else
+			#mkdir "${selected}"
+			
+			#--get password
+			pw="$(guipin.sh -p 'Wifi Key: ' -e 'Wlan is Encrypted' -t 'Wifi Key prompt' -d 'No stored key found')" || return 1
+			wpa_passphrase "${selected}" "${pw}" | grep -v "#psk=" > wifi.conf || return 2
+		fi
+		sudo -A wpa_supplicant -B -c wifi.conf -i "$1" || return 3
+	fi
+}
+
+_doconnect(){
+	_connect "$1"
+	echo "$?"
+}
+

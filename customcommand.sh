@@ -1,6 +1,7 @@
 #!/bin/sh
 #resuzlt: dwm workdir is $HOME
 cd "$HOME/.dwm"
+source dev.ln/buttons/buttons.src
 ./updatebar.sh "custom"
 ./menu_onopen.sh #> /dev/null
 

@@ -1,0 +1,16 @@
+#!/bin/sh
+source $HOME/.dwm/conf/env.src
+
+_get_defaultdmenuListLen(){
+	cat $HOME/.dwm/conf/dmenu_listlen.conf
+}
+_get_defaultdmenuArgs(){
+local len=$(_get_defaultdmenuListLen)
+let "len=$len+2"
+#echo '--dmenu "-i -l 11" --dmenu-prompt ".." --dmenu-font "monospace:size=48" --dmenu-nb "#99C3FC" --dmenu-nf "#FFFFFF" --dmenu-sb "#FF7A7E" --dmenu-sf "#000000"'
+echo '--dmenu-i --dmenu-length '"$len"' --dmenu-prompt .. --dmenu-font monospace:size=48 --dmenu-nb #99C3FC --dmenu-nf #FFFFFF --dmenu-sb #FF7A7E --dmenu-sf #000000'
+}
+test(){
+echo '-p testgggggggggggggggggggggggggggg'
+}
+#ls | dmenu $(test)
